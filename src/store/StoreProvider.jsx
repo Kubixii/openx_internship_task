@@ -18,7 +18,6 @@ const StoreProvider = ({ children }) => {
 
 
     useEffect(() => {
-
         if (isFetched.current === 0) {
             fetchCarts()
             fetchUsers()

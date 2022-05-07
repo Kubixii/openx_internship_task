@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import React from 'react'
 import { StoreContext } from '../../../store/StoreProvider';
@@ -13,10 +13,13 @@ const Carts = () => {
     useEffect(() => {
         if (isFetched.current === 6) {
             calculateCartsValues()
-            setTimeout(() => getMaxValueCart(), 1000)
+            // getMaxValueCart()
         }
     }, [isFetched.current])
 
+    useEffect(() => {
+        getMaxValueCart()
+    }, [cartValues])
 
 
     const calculateCartsValues = async () => {
@@ -44,16 +47,12 @@ const Carts = () => {
     }
 
     const getMaxValueCart = async () => {
-
         const cartsPrices = cartValues.map(cart => cart.price)
 
         const user = Array.from(users).at(cartValues.userId).name
-        while (cartsPrices === []) {
-            console.log("HE");
-        }
+
         const maxValue = Math.max(...cartsPrices)
-        console.log(maxValue);
-        console.log(cartsPrices);
+
         setMaxValueCart({
             fullName: user.firstname + " " + user.lastname,
             price: maxValue
